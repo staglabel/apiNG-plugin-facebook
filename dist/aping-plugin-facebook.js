@@ -1,6 +1,6 @@
 /**
     @name: aping-plugin-facebook 
-    @version: 0.7.8 (28-01-2016) 
+    @version: 0.7.8 (14-03-2018) 
     @author: Jonathan Hornung 
     @url: https://github.com/JohnnyTheTank/apiNG-plugin-facebook 
     @license: MIT
@@ -36,6 +36,11 @@ angular.module("jtt_aping_facebook", ['jtt_facebook'])
                         page: request.page,
                         access_token: apingUtilityHelper.getApiCredentials(apingFacebookHelper.getThisPlatformString(), "access_token"),
                     };
+
+                    if (request.accessToken) {
+                        requestObject.access_token = request.accessToken;
+                    }
+
                     if (typeof request.items !== "undefined") {
                         requestObject.limit = request.items;
                     } else {
@@ -613,7 +618,7 @@ angular.module("jtt_facebook", [])
         this.getApiBaseUrl = function (_params) {
             var version;
 
-            if(_params && typeof _params.version !== "undefined") {
+            if(angular.isDefined(_params) && angular.isDefined(_params.version)) {
                 version = _params.version+"/";
             } else {
                 version = "v2.5/";
@@ -624,7 +629,7 @@ angular.module("jtt_facebook", [])
         this.fillDataInObjectByList = function(_object, _params, _list) {
 
             angular.forEach(_list, function (value, key) {
-                if(typeof _params[value] !== "undefined") {
+                if(angular.isDefined(_params[value])) {
                     _object.object[value] = _params[value];
                 }
             });
@@ -641,7 +646,7 @@ angular.module("jtt_facebook", [])
                 url: "",
             };
 
-            if (typeof _params.limit !== "undefined") {
+            if (angular.isDefined(_params.limit)) {
                 facebookSearchData.object.limit = _params.limit;
             }
 

@@ -29,6 +29,11 @@ angular.module("jtt_aping_facebook", ['jtt_facebook'])
                         page: request.page,
                         access_token: apingUtilityHelper.getApiCredentials(apingFacebookHelper.getThisPlatformString(), "access_token"),
                     };
+
+                    if (request.accessToken) {
+                        requestObject.access_token = request.accessToken;
+                    }
+
                     if (typeof request.items !== "undefined") {
                         requestObject.limit = request.items;
                     } else {
